@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
-// Proxy class methods to Underscore functions, wrapping the model's
-// `attributes` object or collection's `models` array behind the scenes.
+// Proxy class methods to Lodash functions, wrapping the model's `attributes`
+// object or collection's `models` array behind the scenes.
 //
 // collection.filter(function(model) { return model.get('age') > 10 });
 // collection.each(this.addView);
