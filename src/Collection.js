@@ -44,9 +44,7 @@ export const Collection = /*#__PURE__*/ (() => {
     // The JSON representation of a Collection is an array of the
     // models' attributes.
     toJSON(options) {
-      return this.map(function (model) {
-        return model.toJSON(options);
-      });
+      return this.map((model) => model.toJSON(options));
     }
 
     // Proxy `sync` by default.
@@ -300,12 +298,11 @@ export const Collection = /*#__PURE__*/ (() => {
     fetch(options) {
       options = { parse: true, ...options };
       const success = options.success;
-      const collection = this;
-      options.success = function (resp) {
+      options.success = (resp) => {
         const method = options.reset ? 'reset' : 'set';
-        collection[method](resp, options);
-        if (success) success.call(options.context, collection, resp, options);
-        collection.trigger('sync', collection, resp, options);
+        this[method](resp, options);
+        if (success) success.call(options.context, this, resp, options);
+        this.trigger('sync', this, resp, options);
       };
       wrapError(this, options);
       return this.sync('read', this, options);
@@ -320,10 +317,9 @@ export const Collection = /*#__PURE__*/ (() => {
       model = this._prepareModel(model, options);
       if (!model) return false;
       if (!wait) this.add(model, options);
-      const collection = this;
       const success = options.success;
-      options.success = function (m, resp, callbackOpts) {
-        if (wait) collection.add(m, callbackOpts);
+      options.success = (m, resp, callbackOpts) => {
+        if (wait) this.add(m, callbackOpts);
         if (success) success.call(callbackOpts.context, m, resp, callbackOpts);
       };
       model.save(null, options);

@@ -198,13 +198,12 @@ export const Model = /*#__PURE__*/ (() => {
     // local attributes. Any changed attributes will trigger a "change" event.
     fetch(options) {
       options = { parse: true, ...options };
-      const model = this;
       const success = options.success;
-      options.success = function (resp) {
-        const serverAttrs = options.parse ? model.parse(resp, options) : resp;
-        if (!model.set(serverAttrs, options)) return false;
-        if (success) success.call(options.context, model, resp, options);
-        model.trigger('sync', model, resp, options);
+      options.success = (resp) => {
+        const serverAttrs = options.parse ? this.parse(resp, options) : resp;
+        if (!this.set(serverAttrs, options)) return false;
+        if (success) success.call(options.context, this, resp, options);
+        this.trigger('sync', this, resp, options);
       };
       wrapError(this, options);
       return this.sync('read', this, options);
@@ -237,17 +236,16 @@ export const Model = /*#__PURE__*/ (() => {
 
       // After a successful server-side save, the client is (optionally)
       // updated with the server-side state.
-      const model = this;
       const success = options.success;
       const attributes = this.attributes;
-      options.success = function (resp) {
+      options.success = (resp) => {
         // Ensure attributes are restored during synchronous saves.
-        model.attributes = attributes;
-        let serverAttrs = options.parse ? model.parse(resp, options) : resp;
+        this.attributes = attributes;
+        let serverAttrs = options.parse ? this.parse(resp, options) : resp;
         if (wait) serverAttrs = { ...attrs, ...serverAttrs };
-        if (serverAttrs && !model.set(serverAttrs, options)) return false;
-        if (success) success.call(options.context, model, resp, options);
-        model.trigger('sync', model, resp, options);
+        if (serverAttrs && !this.set(serverAttrs, options)) return false;
+        if (success) success.call(options.context, this, resp, options);
+        this.trigger('sync', this, resp, options);
       };
       wrapError(this, options);
 
@@ -269,19 +267,18 @@ export const Model = /*#__PURE__*/ (() => {
     // If `wait: true` is passed, waits for the server to respond before removal.
     destroy(options) {
       options = { ...options };
-      const model = this;
       const success = options.success;
       const wait = options.wait;
 
-      const destroy = function () {
-        model.stopListening();
-        model.trigger('destroy', model, model.collection, options);
+      const destroy = () => {
+        this.stopListening();
+        this.trigger('destroy', this, this.collection, options);
       };
 
-      options.success = function (resp) {
+      options.success = (resp) => {
         if (wait) destroy();
-        if (success) success.call(options.context, model, resp, options);
-        if (!model.isNew()) model.trigger('sync', model, resp, options);
+        if (success) success.call(options.context, this, resp, options);
+        if (!this.isNew()) this.trigger('sync', this, resp, options);
       };
 
       let xhr = false;

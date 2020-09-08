@@ -82,7 +82,7 @@ export let sync = function sync(method, model, options) {
 
   // Pass along `textStatus` and `errorThrown` from jQuery.
   const error = options.error;
-  options.error = function (xhr, textStatus, errorThrown) {
+  options.error = (xhr, textStatus, errorThrown) => {
     options.textStatus = textStatus;
     options.errorThrown = errorThrown;
     if (error) error.call(options.context, xhr, textStatus, errorThrown);
