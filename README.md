@@ -30,3 +30,5 @@ $ npm i -P boddle
   - `emulateHTTP` -> `setEmulateHTTP`
   - `emulateJSON` -> `setEmulateJSON`
   - `sync` -> `setSyncImplementation`
+- Supports standard `class`-`extend` syntax instead of requiring e.g. `Model.extend`.
+- Potential for minor differences in method semantics. e.g. due to the `lodash` switch `Model#pick` does not support a function getter - use `Model#pickBy` instead.
