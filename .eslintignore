@@ -1,1 +1,5 @@
+/boddle*
 /docs
+/node_modules
+/test/vendor
+/test

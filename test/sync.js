@@ -19,7 +19,7 @@
     },
 
     afterEach: function(assert) {
-      Backbone.emulateHTTP = false;
+      Backbone.setEmulateHTTP( false);
     }
 
   });
@@ -181,11 +181,11 @@
     var model = new Backbone.Model;
     model.url = '/test';
 
-    Backbone.emulateHTTP = true;
+    Backbone.setEmulateHTTP(true);
     model.sync('create', model);
     assert.strictEqual(this.ajaxSettings.emulateHTTP, true);
 
-    Backbone.emulateHTTP = false;
+    Backbone.setEmulateHTTP( false);
     model.sync('create', model);
     assert.strictEqual(this.ajaxSettings.emulateHTTP, false);
   });
@@ -195,18 +195,18 @@
     var model = new Backbone.Model;
     model.url = '/test';
 
-    Backbone.emulateJSON = true;
+    Backbone.setEmulateJSON( true);
     model.sync('create', model);
     assert.strictEqual(this.ajaxSettings.emulateJSON, true);
 
-    Backbone.emulateJSON = false;
+    Backbone.setEmulateJSON( false);
     model.sync('create', model);
     assert.strictEqual(this.ajaxSettings.emulateJSON, false);
   });
 
   QUnit.test('#1756 - Call user provided beforeSend function.', function(assert) {
     assert.expect(4);
-    Backbone.emulateHTTP = true;
+    Backbone.setEmulateHTTP( true);
     var model = new Backbone.Model;
     model.url = '/test';
     var xhr = {

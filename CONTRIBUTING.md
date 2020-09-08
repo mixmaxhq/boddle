@@ -1,4 +1,4 @@
-## How to Open a Backbone.js Ticket
+## How to Open a Ticket
 
 - Before you open a ticket or send a pull request,
   [search](https://github.com/mixmaxhq/boddle/issues) for previous discussions

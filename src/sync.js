@@ -1,32 +1,46 @@
-// Backbone.sync
-// -------------
+import { urlError } from './utils';
+import * as flags from './flags';
+import _ from 'lodash';
+import ajaxFetch from './fetch';
 
-// Override this function to change the manner in which Backbone persists
-// models to the server. You will be passed the type of request, and the
-// model in question. By default, makes a RESTful Ajax request
-// to the model's `url()`. Some possible customizations could be:
+// Map from CRUD to HTTP for our default `sync` implementation.
+const methodMap = Object.assign(Object.create(null), {
+  create: 'POST',
+  update: 'PUT',
+  patch: 'PATCH',
+  delete: 'DELETE',
+  read: 'GET',
+});
+
+// sync
+// ----
+
+// Override this function to change the manner in which the library persists
+// models to the server. You will be passed the type of request, and the model
+// in question. By default, makes a RESTful Ajax request to the model's `url()`.
+// Some possible customizations could be:
 //
 // * Use `setTimeout` to batch rapid-fire updates into a single request.
 // * Send up the models as XML instead of JSON.
 // * Persist models via WebSockets instead of Ajax.
 //
-// Turn on `Backbone.emulateHTTP` in order to send `PUT` and `DELETE` requests
-// as `POST`, with a `_method` parameter containing the true HTTP method,
-// as well as all requests with the body as `application/x-www-form-urlencoded`
-// instead of `application/json` with the model in a param named `model`.
-// Useful when interfacing with server-side languages like **PHP** that make
-// it difficult to read the body of `PUT` requests.
-Backbone.sync = function (method, model, options) {
+// Turn on the `emulateHTTP` export in order to send `PUT` and `DELETE` requests
+// as `POST`, with a `_method` parameter containing the true HTTP method, as
+// well as all requests with the body as `application/x-www-form-urlencoded`
+// instead of `application/json` with the model in a param named `model`. Useful
+// when interfacing with server-side languages like **PHP** that make it
+// difficult to read the body of `PUT` requests.
+export let sync = function sync(method, model, options) {
   const type = methodMap[method];
 
   // Default options, unless specified.
   _.defaults(options || (options = {}), {
-    emulateHTTP: Backbone.emulateHTTP,
-    emulateJSON: Backbone.emulateJSON,
+    emulateHTTP: flags.emulateHTTP,
+    emulateJSON: flags.emulateJSON,
   });
 
   // Default JSON-request options.
-  const params = { type: type, dataType: 'json' };
+  const params = { type, dataType: 'json' };
 
   // Ensure that we have a URL.
   if (!options.url) {
@@ -75,22 +89,20 @@ Backbone.sync = function (method, model, options) {
   };
 
   // Make the request, allowing the user to override any Ajax options.
-  const xhr = (options.xhr = Backbone.ajax(_.extend(params, options)));
+  const xhr = (options.xhr = ajax(_.extend(params, options)));
   model.trigger('request', model, xhr, options);
   return xhr;
 };
 
-// Map from CRUD to HTTP for our default `Backbone.sync` implementation.
-var methodMap = {
-  create: 'POST',
-  update: 'PUT',
-  patch: 'PATCH',
-  delete: 'DELETE',
-  read: 'GET',
-};
+// Set the default implementation of `ajax` to proxy through to a fetch-based
+// ajax implementation. Override this if you'd like to use a different library.
+// eslint-disable-next-line prefer-const
+export let ajax = ajaxFetch;
 
-// Set the default implementation of `Backbone.ajax` to proxy through to `$`.
-// Override this if you'd like to use a different library.
-Backbone.ajax = function () {
-  return Backbone.$.ajax.apply(Backbone.$, arguments);
-};
+export function setSyncImplementation(impl) {
+  sync = impl;
+}
+
+export function setAJAXImplementation(impl) {
+  ajax = impl;
+}

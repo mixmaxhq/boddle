@@ -11,26 +11,45 @@
   ],
   "author": "Jeremy Ashkenas",
   "dependencies": {
-    "underscore": ">=1.8.3"
+    "@babel/runtime": "^7.11.2",
+    "lodash": "^4.17.20"
   },
   "devDependencies": {
-    "coffee-script": "1.7.1",
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-transform-runtime": "^7.11.5",
+    "@babel/preset-env": "^7.11.5",
+    "@mixmaxhq/prettier-config": "^1.0.0",
+    "@rollup/plugin-babel": "^5.2.0",
+    "@rollup/plugin-commonjs": "^15.0.0",
+    "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^9.0.0",
+    "@rollup/plugin-replace": "^2.3.3",
+    "babel-eslint": "^10.1.0",
+    "babel-plugin-lodash": "^3.3.4",
+    "babel-plugin-transform-undefined-to-void": "^6.9.4",
     "docco": "0.7.0",
-    "eslint": "^2.11.0",
+    "eslint": "^7.8.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
     "karma": "^0.13.13",
     "karma-phantomjs-launcher": "^1.0.0",
     "karma-qunit": "^1.0.0",
     "phantomjs-prebuilt": "^2.1.7",
+    "prettier": "^2.1.1",
     "qunitjs": "^2.0.0",
-    "uglify-js": "^2.4.17"
+    "rollup": "^2.26.10"
   },
   "scripts": {
-    "test": "karma start && coffee test/model.coffee && npm run lint",
-    "build": "uglifyjs backbone.js --mangle --source-map backbone-min.map -o backbone-min.js",
-    "doc": "docco backbone.js && docco examples/todos/todos.js examples/backbone.localStorage.js",
+    "test": "NODE_ENV=test npm run build && karma start && npm run lint",
+    "build": "rollup -c",
+    "doc": "docco src/*",
     "lint": "eslint ."
   },
-  "main": "backbone.js",
+  "main": "boddle.cjs.js",
+  "module": "boddle.es.js",
+  "browser": "boddle.es.js",
   "version": "2.0.0",
   "license": "MIT",
   "repository": {
@@ -38,9 +57,8 @@
     "url": "https://github.com/mixmaxhq/boddle.git"
   },
   "files": [
-    "backbone.js",
-    "backbone-min.js",
-    "backbone-min.map",
+    "boddle.cjs.js",
+    "boddle.es.js",
     "LICENSE"
   ]
 }

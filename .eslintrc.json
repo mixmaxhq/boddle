@@ -8,10 +8,8 @@
   },
   "env": {
     "browser": true,
+    "es6": true,
     "node": true
-  },
-  "globals": {
-    "Promise": false
   },
   "rules": {
     "prettier/prettier": "error",

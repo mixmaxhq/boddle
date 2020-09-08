@@ -18,3 +18,15 @@ https://github.com/broofa
 ```sh
 $ npm i -P boddle
 ```
+
+## notable differences
+
+- No support for `View`, `Router`, `History`.
+- Does not use jQuery or underscore.
+- Does not support `Model#mixin` or `Collection#mixin`.
+- Does not provide a global event bus (e.g. `Backbone.trigger` on global `Backbone`).
+- Exports setter functions for previously-rewriteable exports:
+  - `ajax` -> `setAJAXImplementation`
+  - `emulateHTTP` -> `setEmulateHTTP`
+  - `emulateJSON` -> `setEmulateJSON`
+  - `sync` -> `setSyncImplementation`

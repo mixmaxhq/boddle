@@ -1,10 +1,12 @@
+import _ from 'lodash';
+
 // Helpers
 // -------
 
 // Helper function to correctly set up the prototype chain for subclasses.
 // Similar to `goog.inherits`, but uses a hash of prototype properties and
 // class properties to be extended.
-const extend = function (protoProps, staticProps) {
+export default function extend(protoProps, staticProps) {
   const parent = this;
   let child;
 
@@ -13,26 +15,24 @@ const extend = function (protoProps, staticProps) {
   // by us to simply call the parent constructor.
   if (protoProps && _.has(protoProps, 'constructor')) {
     child = protoProps.constructor;
+
+    // Set the prototype chain to inherit from `parent`, without calling
+    // `parent`'s constructor function and add the prototype properties.
+    child.prototype = _.create(parent.prototype, protoProps);
+    child.prototype.constructor = child;
   } else {
-    child = function () {
-      return parent.apply(this, arguments);
-    };
+    child = class extends parent {};
+
+    // Add the prototype properties.
+    Object.assign(child.prototype, protoProps);
   }
 
   // Add static properties to the constructor function, if supplied.
   _.extend(child, parent, staticProps);
-
-  // Set the prototype chain to inherit from `parent`, without calling
-  // `parent`'s constructor function and add the prototype properties.
-  child.prototype = _.create(parent.prototype, protoProps);
-  child.prototype.constructor = child;
 
   // Set a convenience property in case the parent's prototype is needed
   // later.
   child.__super__ = parent.prototype;
 
   return child;
-};
-
-// Set up inheritance for the model, collection, router, view and history.
-Model.extend = Collection.extend = Router.extend = View.extend = History.extend = extend;
+}
