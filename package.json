@@ -1,13 +1,11 @@
 {
-  "name": "backbone",
-  "description": "Give your JS App some Backbone with Models, Views, Collections, and Events.",
-  "url": "http://backbonejs.org",
+  "name": "boddle",
+  "description": "Backbone-inspired data layer, aiming at majority API compatibility with modern promises and no underscore/jquery dependency.",
+  "url": "https://github.com/mixmaxhq/boddle",
   "keywords": [
+    "backbone",
     "model",
-    "view",
-    "controller",
-    "router",
-    "server",
+    "collection",
     "client",
     "browser"
   ],
@@ -30,14 +28,14 @@
     "test": "karma start && coffee test/model.coffee && npm run lint",
     "build": "uglifyjs backbone.js --mangle --source-map backbone-min.map -o backbone-min.js",
     "doc": "docco backbone.js && docco examples/todos/todos.js examples/backbone.localStorage.js",
-    "lint": "eslint backbone.js test/*.js"
+    "lint": "eslint ."
   },
   "main": "backbone.js",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jashkenas/backbone.git"
+    "url": "https://github.com/mixmaxhq/boddle.git"
   },
   "files": [
     "backbone.js",
