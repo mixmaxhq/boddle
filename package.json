@@ -1,7 +1,7 @@
 {
-  "name": "boddle",
+  "name": "neckbone",
   "description": "Backbone-inspired data layer, aiming at majority API compatibility with modern promises and no underscore/jquery dependency.",
-  "url": "https://github.com/mixmaxhq/boddle",
+  "url": "https://github.com/mixmaxhq/neckbone",
   "keywords": [
     "backbone",
     "model",
@@ -47,18 +47,18 @@
     "doc": "docco src/*",
     "lint": "eslint ."
   },
-  "main": "boddle.cjs.js",
-  "module": "boddle.es.js",
-  "browser": "boddle.es.js",
+  "main": "neckbone.cjs.js",
+  "module": "neckbone.es.js",
+  "browser": "neckbone.es.js",
   "version": "2.0.0",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mixmaxhq/boddle.git"
+    "url": "https://github.com/mixmaxhq/neckbone.git"
   },
   "files": [
-    "boddle.cjs.js",
-    "boddle.es.js",
+    "neckbone.cjs.js",
+    "neckbone.es.js",
     "LICENSE"
   ]
 }

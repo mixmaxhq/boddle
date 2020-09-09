@@ -12,7 +12,7 @@ module.exports = function (config) {
       'test/vendor/json2.js',
       'node_modules/lodash/lodash.js',
       'node_modules/regenerator-runtime/runtime.js',
-      'boddle.js',
+      'neckbone.js',
       'test/setup/*.js',
       'test/!(main)*.js',
     ],

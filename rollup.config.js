@@ -38,11 +38,11 @@ export default process.env.NODE_ENV !== 'test'
       ],
       output: [
         {
-          file: './boddle.es.js',
+          file: './neckbone.es.js',
           format: 'es',
         },
         {
-          file: './boddle.cjs.js',
+          file: './neckbone.cjs.js',
           format: 'cjs',
         },
       ],
@@ -74,7 +74,7 @@ export default process.env.NODE_ENV !== 'test'
         }),
       ],
       output: {
-        file: './boddle.js',
+        file: './neckbone.js',
         format: 'iife',
         globals: { lodash: '_' },
         name: 'Backbone',
