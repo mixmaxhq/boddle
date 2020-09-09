@@ -2,19 +2,19 @@
 // For example:
 // npm install karma-firefox-launcher
 // karma start --browsers=Firefox
-module.exports = function(config) {
+module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ['qunit'],
 
     // list of files / patterns to load in the browser
     files: [
-        'test/vendor/jquery.js',
-        'test/vendor/json2.js',
-        'test/vendor/underscore.js',
-        'backbone.js',
-        'test/setup/*.js',
-        'test/*.js'
+      'test/vendor/json2.js',
+      'node_modules/lodash/lodash.js',
+      'node_modules/regenerator-runtime/runtime.js',
+      'neckbone.js',
+      'test/setup/*.js',
+      'test/!(main)*.js',
     ],
 
     // test results reporter to use
@@ -45,10 +45,11 @@ module.exports = function(config) {
 
     // See http://stackoverflow.com/a/27873086/1517919
     customLaunchers: {
-        Chrome_sandbox: {
-            base: 'Chrome',
-            flags: ['--no-sandbox']
-        }
-    }
+      // eslint-disable-next-line camelcase
+      Chrome_sandbox: {
+        base: 'Chrome',
+        flags: ['--no-sandbox'],
+      },
+    },
   });
 };

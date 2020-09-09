@@ -1,4 +1,2 @@
-$('body').append(
-    '<div id="qunit"></div>' +
-    '<div id="qunit-fixture"></div>'
-);
+document.body.appendChild(Object.assign(document.createElement('div'), { id: 'qunit' }));
+document.body.appendChild(Object.assign(document.createElement('div'), { id: 'qunit-fixture' }));

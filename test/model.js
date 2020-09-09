@@ -141,7 +141,7 @@
     assert.equal(model.url(), '/nested/1/collection/2');
   });
 
-  QUnit.test('underscore methods', function(assert) {
+  QUnit.test('Lodash methods', function(assert) {
     assert.expect(5);
     var model = new Backbone.Model({foo: 'a', bar: 'b', baz: 'c'});
     var model2 = model.clone();
@@ -1393,27 +1393,6 @@
     model.set({valid: false});
     assert.equal(model.isValid(), false);
     assert.ok(!model.set('valid', false, {validate: true}));
-  });
-
-  QUnit.test('mixin', function(assert) {
-    Backbone.Model.mixin({
-      isEqual: function(model1, model2) {
-        return _.isEqual(model1, model2.attributes);
-      }
-    });
-
-    var model1 = new Backbone.Model({
-      a: {b: 2}, c: 3
-    });
-    var model2 = new Backbone.Model({
-      a: {b: 2}, c: 3
-    });
-    var model3 = new Backbone.Model({
-      a: {b: 4}, c: 3
-    });
-
-    assert.equal(model1.isEqual(model2), true);
-    assert.equal(model1.isEqual(model3), false);
   });
 
 
